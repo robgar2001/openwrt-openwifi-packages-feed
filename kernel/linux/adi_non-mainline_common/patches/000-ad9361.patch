@@ -1,54 +1,60 @@
+Subject: [PATCH] Patch ad9361.c/.h
+---
+Index: drivers/iio/adc/ad9361.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
 diff --git a/drivers/iio/adc/ad9361.c b/drivers/iio/adc/ad9361.c
-index 91f166675024..8403edc6f482 100644
---- a/drivers/iio/adc/ad9361.c
-+++ b/drivers/iio/adc/ad9361.c
-@@ -1234,7 +1234,7 @@ static int ad9361_load_mixer_gm_subtable(struct ad9361_rf_phy *phy)
+--- a/drivers/iio/adc/ad9361.c	(revision 89e2e54cfdaded0113f53e73979afc89646489b0)
++++ b/drivers/iio/adc/ad9361.c	(revision dbab4b35cba47c4d8c41a3f95a03600d6da3222a)
+@@ -1234,7 +1234,7 @@
  	return 0;
  }
- 
+
 -static int ad9361_set_tx_atten(struct ad9361_rf_phy *phy, u32 atten_mdb,
 +int ad9361_set_tx_atten(struct ad9361_rf_phy *phy, u32 atten_mdb,
  			       bool tx1, bool tx2, bool immed)
  {
  	u8 buf[2];
-@@ -1266,8 +1266,9 @@ static int ad9361_set_tx_atten(struct ad9361_rf_phy *phy, u32 atten_mdb,
- 
+@@ -1266,8 +1266,9 @@
+
  	return ret;
  }
 +EXPORT_SYMBOL(ad9361_set_tx_atten);
- 
+
 -static int ad9361_get_tx_atten(struct ad9361_rf_phy *phy, u32 tx_num)
 +int ad9361_get_tx_atten(struct ad9361_rf_phy *phy, u32 tx_num)
  {
  	u8 buf[2];
  	int ret = 0;
-@@ -1285,6 +1286,7 @@ static int ad9361_get_tx_atten(struct ad9361_rf_phy *phy, u32 tx_num)
- 
+@@ -1285,6 +1286,7 @@
+
  	return code;
  }
 +EXPORT_SYMBOL(ad9361_get_tx_atten);
- 
+
  int ad9361_tx_mute(struct ad9361_rf_phy *phy, u32 state)
  {
-@@ -3449,6 +3451,8 @@ static int ad9361_gc_setup(struct ad9361_rf_phy *phy, struct gain_control *ctrl)
+@@ -3448,6 +3450,8 @@
  			  AGCLL_MAX_INCREASE(~0),  reg);
- 
+
  	/* Fast AGC - Peak Detectors and Final Settling */
 +  ad9361_spi_writef(spi, REG_AGC_LOCK_LEVEL, ENABLE_DIG_SAT_OVRG, ctrl->f_agc_dig_sat_ovrg_en);
 +
  	reg = ctrl->f_agc_lpf_final_settling_steps;
  	reg = clamp_t(u32, reg, 0U, 3U);
  	ad9361_spi_writef(spi, REG_FAST_ENERGY_LOST_THRESH,
-@@ -3744,7 +3748,7 @@ static int ad9361_get_auxadc(struct ad9361_rf_phy *phy)
+@@ -3743,7 +3747,7 @@
    // Setup Control Outs
    //************************************************************
- 
+
 -static int ad9361_ctrl_outs_setup(struct ad9361_rf_phy *phy,
 +int ad9361_ctrl_outs_setup(struct ad9361_rf_phy *phy,
  				  struct ctrl_outs_control *ctrl)
  {
  	struct spi_device *spi = phy->spi;
-@@ -3754,6 +3758,7 @@ static int ad9361_ctrl_outs_setup(struct ad9361_rf_phy *phy,
+@@ -3753,6 +3757,7 @@
  	ad9361_spi_write(spi, REG_CTRL_OUTPUT_POINTER, ctrl->index); // Ctrl Out index
  	return ad9361_spi_write(spi, REG_CTRL_OUTPUT_ENABLE, ctrl->en_mask); // Ctrl Out [7:0] output enable
  }
@@ -56,24 +62,24 @@ index 91f166675024..8403edc6f482 100644
    //************************************************************
    // Setup GPO
    //************************************************************
-@@ -5252,7 +5257,7 @@ static int ad9361_setup(struct ad9361_rf_phy *phy)
- 
+@@ -5251,7 +5256,7 @@
+
  }
- 
+
 -static int ad9361_do_calib_run(struct ad9361_rf_phy *phy, u32 cal, int arg)
 +int ad9361_do_calib_run(struct ad9361_rf_phy *phy, u32 cal, int arg)
  {
  	struct ad9361_rf_phy_state *st = phy->state;
- 	int ret;
-@@ -5285,6 +5290,7 @@ static int ad9361_do_calib_run(struct ad9361_rf_phy *phy, u32 cal, int arg)
- 
- 	return ret;
+ 	int ret, ret2;
+@@ -5284,6 +5289,7 @@
+
+ 	return ret ? ret : ret2;
  }
 +EXPORT_SYMBOL(ad9361_do_calib_run);
- 
+
  static int ad9361_update_rf_bandwidth(struct ad9361_rf_phy *phy,
  				     u32 rf_rx_bw, u32 rf_tx_bw)
-@@ -8906,6 +8912,8 @@ static struct ad9361_phy_platform_data
+@@ -8911,6 +8917,8 @@
  	ad9361_of_get_u32(iodev, np, "adi,fagc-lock-level-gain-increase-upper-limit", 5,
  			&pdata->gain_ctrl.f_agc_lock_level_gain_increase_upper_limit); /* 0x118 0..63 */
  		/* Fast AGC - Peak Detectors and Final Settling */
@@ -82,3 +88,36 @@ index 91f166675024..8403edc6f482 100644
  	ad9361_of_get_u32(iodev, np, "adi,fagc-lpf-final-settling-steps", 1,
  			&pdata->gain_ctrl.f_agc_lpf_final_settling_steps); /* 0x112:6 0..3 (Post Lock Level Step)*/
  	ad9361_of_get_u32(iodev, np, "adi,fagc-lmt-final-settling-steps", 1,
+Index: drivers/iio/adc/ad9361.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/drivers/iio/adc/ad9361.h b/drivers/iio/adc/ad9361.h
+--- a/drivers/iio/adc/ad9361.h	(revision 89e2e54cfdaded0113f53e73979afc89646489b0)
++++ b/drivers/iio/adc/ad9361.h	(revision dbab4b35cba47c4d8c41a3f95a03600d6da3222a)
+@@ -157,6 +157,11 @@
+ 	struct ad9361_rf_phy_state	*state;
+ };
+
++struct ctrl_outs_control {
++	u8			index;
++	u8			en_mask;
++};
++
+
+ ssize_t ad9361_dig_interface_timing_analysis(struct ad9361_rf_phy *phy,
+ 						   char *buf, unsigned buflen);
+@@ -178,6 +183,12 @@
+ int ad9361_set_trx_clock_chain_default(struct ad9361_rf_phy *phy);
+ int ad9361_dig_tune(struct ad9361_rf_phy *phy, unsigned long max_freq,
+ 			   enum dig_tune_flags flags);
++int ad9361_set_tx_atten(struct ad9361_rf_phy *phy, u32 atten_mdb,
++				   bool tx1, bool tx2, bool immed);
++int ad9361_ctrl_outs_setup(struct ad9361_rf_phy *phy,
++				  struct ctrl_outs_control *ctrl);
++int ad9361_do_calib_run(struct ad9361_rf_phy *phy, u32 cal, int arg);
++int ad9361_get_tx_atten(struct ad9361_rf_phy *phy, u32 tx_num);
+ int ad9361_tx_mute(struct ad9361_rf_phy *phy, u32 state);
+ int ad9361_write_bist_reg(struct ad9361_rf_phy *phy, u32 val);
+ bool ad9361_uses_rx2tx2(struct ad9361_rf_phy *phy);
