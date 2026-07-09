@@ -5,8 +5,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_URL:=https://github.com/analogdevicesinc/linux.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=adi-6.6.0
-PKG_HASH:=df45891e95e99e81026772013812efca0161c51f4784f998b68038bd70beb3dd
+PKG_SOURCE_VERSION:=adi-6.12.0
+PKG_HASH:=a9d59d55e3e352c4b28954b17286accb9203fa09095d12d0cb6da380a5749ddb
+PKG_VERSION:=6.12.0
 
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
 
@@ -14,10 +15,6 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 ADI_DIR:=$(PKG_BUILD_DIR)
-
-OPENWIFI_REVISION:=061c9ffac699c79637f0c2b3904699a90bf38ab8
-OPENWIFI_GITHUB_URL:= \
-https://raw.githubusercontent.com/open-sdr/openwifi/$(OPENWIFI_REVISION)
 
 define Build/Configure
 	cp -f $(ADI_DIR)/include/linux/clk/clkscale.h \
@@ -30,6 +27,8 @@ define Build/Configure
 	$(LINUX_DIR)/include/linux/jesd204/adi-common.h
 
 	mkdir -p $(LINUX_DIR)/include/linux/iio
+	cp -f $(ADI_DIR)/include/linux/iio/consumer.h \
+	$(LINUX_DIR)/include/linux/iio/consumer.h
 	cp -f $(ADI_DIR)/include/linux/iio/types.h \
 	$(LINUX_DIR)/include/linux/iio/types.h
 	cp -f $(ADI_DIR)/include/linux/iio/iio.h \
@@ -45,9 +44,9 @@ define Build/Configure
 	cp -f $(ADI_DIR)/include/dt-bindings/jesd204/device-states.h \
 	$(LINUX_DIR)/include/dt-bindings/jesd204/device-states.h
 
-	mkdir -p $(LINUX_DIR)/include/linux/fpga
-	cp -f $(ADI_DIR)/include/linux/fpga/adi-axi-common.h \
-	$(LINUX_DIR)/include/linux/fpga/adi-axi-common.h
+	mkdir -p $(LINUX_DIR)/include/linux
+	cp -f $(ADI_DIR)/include/linux/adi-axi-common.h \
+	$(LINUX_DIR)/include/linux/adi-axi-common.h
 
 	mkdir -p $(LINUX_DIR)/drivers/iio
 	cp -f $(ADI_DIR)/drivers/iio/industrialio-core.c \
@@ -87,17 +86,6 @@ define KernelPackage/ad9361
 endef
 adi-$(CONFIG_PACKAGE_kmod-ad9361)+= CONFIG_AD9361=m
 NOSTDINC_FLAGS-$(CONFIG_PACKAGE_kmod-ad9361)+=-DCONFIG_CF_AXI_ADC
-
-# If OpenWiFi will be build, patches should be applied
-#define Build/ad9361/Prepare
-#	cd $(ADI_DIR)/ && \
-#	wget $(OPENWIFI_GITHUB_URL)/kernel_boot/ad9361.patch && \
-#	wget $(OPENWIFI_GITHUB_URL)/kernel_boot/ad9361_conv.patch
-#
-#	cd $(ADI_DIR)/ && ls && \
-#	git apply ad9361.patch && \
-#	git apply ad9361_conv.patch
-#endef
 
 #
 #	CF_AXI_ADC driver
