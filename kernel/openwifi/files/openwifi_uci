@@ -1,5 +1,6 @@
 # Set board to .10.122 and host pc to .10.1, as openwifi expects it to be
 uci set network.lan.ipaddr='192.168.10.122'
+uci set network.lan.netmask='255.255.255.0'
 uci set network.lan.gateway='192.168.10.1'
 uci set network.lan.dns='8.8.8.8'
 uci set dhcp.lan=dhcp
