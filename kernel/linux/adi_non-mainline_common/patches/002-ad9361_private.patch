@@ -1,12 +1,30 @@
+Subject: [PATCH] Patch ad9361_private.h
+---
+Index: drivers/iio/adc/ad9361_private.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
 diff --git a/drivers/iio/adc/ad9361_private.h b/drivers/iio/adc/ad9361_private.h
-index dfffc4fa88a9..99dadf844614 100644
---- a/drivers/iio/adc/ad9361_private.h
-+++ b/drivers/iio/adc/ad9361_private.h
-@@ -127,6 +127,7 @@ struct gain_control {
+--- a/drivers/iio/adc/ad9361_private.h	(revision dbab4b35cba47c4d8c41a3f95a03600d6da3222a)
++++ b/drivers/iio/adc/ad9361_private.h	(revision 6d964e8928e0044a53b4b73c875efca948678f95)
+@@ -128,6 +128,7 @@
  	u8 f_agc_lp_thresh_increment_steps; /* 0x117 1..8 */
- 
+
  	/* Fast AGC - Lock Level */
 +  bool f_agc_dig_sat_ovrg_en; /* 0x101:7 Enable digital saturation cause gain decrease */
  	u8 f_agc_lock_level; /* NOT USED: 0x101 0..-127 dBFS same as agc_inner_thresh_high */
  	bool f_agc_lock_level_lmt_gain_increase_en; /* 0x111:6 */
  	u8 f_agc_lock_level_gain_increase_upper_limit; /* 0x118 0..63 */
+@@ -214,11 +215,6 @@
+ 	u8			lvds_invert[2];
+ };
+
+-struct ctrl_outs_control {
+-	u8			index;
+-	u8			en_mask;
+-};
+-
+ struct elna_control {
+ 	u16			gain_mdB;
+ 	u16			bypass_loss_mdB;
