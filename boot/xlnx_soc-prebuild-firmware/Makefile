@@ -6,7 +6,8 @@ PKG_RELEASE:=1
 PKG_SOURCE_URL:=https://github.com/Xilinx/soc-prebuilt-firmware.git
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=xlnx_rel_v2025.1
-PKG_HASH:=0a529ec99d10aefee91214a7ccf08d4410710b30a14b121f6d12c33ce95ffa51
+PKG_HASH:=5d94916507ae8c4c86126edf666bc799f9f088d0f383490d88e7ba474aa04460
+PKG_VERSION:=2025.1
 
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
 
