@@ -6,7 +6,7 @@ PKG_RELEASE:=1
 PKG_SOURCE_URL:=https://github.com/analogdevicesinc/linux.git
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=adi-6.12.0
-PKG_HASH:=a9d59d55e3e352c4b28954b17286accb9203fa09095d12d0cb6da380a5749ddb
+PKG_HASH:=22ffdb51ca0ac44a5f1bb94ec943cb8e18635c393c01f9e2ba8b736072a55250
 PKG_VERSION:=6.12.0
 
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
