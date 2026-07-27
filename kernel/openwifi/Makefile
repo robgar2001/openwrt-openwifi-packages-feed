@@ -49,7 +49,7 @@ define KernelPackage/openwifi
 		+kmod-cf_axi_dds \
 		+wget-ssl \
 		+kmod-xilinx-vdma \
-		+hostapd \
+		+wpad-mesh-mbedtls \
 		+webfsd \
 		+uboot-envtools \
 		+libnl \
