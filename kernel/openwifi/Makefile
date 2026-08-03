@@ -14,7 +14,7 @@ include $(INCLUDE_DIR)/package.mk
 
 OPENWIFI_BRANCH:=master
 OPENWIFI_REVISION:=8c5af493 # Latest known working commit (must be length eight)
-OPENWIFI_GITHUB_REPO:= https://github.com/open-sdr/openwifi.git
+OPENWIFI_GITHUB_REPO:= https://github.com/robgar2001/openwifi.git
 
 
 OPENWIFI_DIR:=$(PKG_BUILD_DIR)/$(PKG_NAME)
