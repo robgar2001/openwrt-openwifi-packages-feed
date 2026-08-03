@@ -12,7 +12,7 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
-OPENWIFI_BRANCH:=master
+OPENWIFI_BRANCH:=feature/cicd
 OPENWIFI_REVISION:=8c5af493 # Latest known working commit (must be length eight)
 OPENWIFI_GITHUB_REPO:= https://github.com/robgar2001/openwifi.git
 
