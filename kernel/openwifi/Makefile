@@ -16,9 +16,13 @@ PKG_BUILD_DEPENDS:=adi_non-mainline_common
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
-OPENWIFI_BRANCH:=feature/cicd
-OPENWIFI_REVISION:=8c5af493 # Latest known working commit (must be length eight)
-OPENWIFI_GITHUB_REPO:= https://github.com/robgar2001/openwifi.git
+OPENWIFI_BRANCH ?= feature/cicd
+OPENWIFI_REVISION ?= 8c5af493 # Latest known working commit (must be length eight)
+# Owner of the openwifi source. The openwifi CI overrides this (via env) to the
+# fork running the workflow; the default stays upstream so the committed feed is
+# upstream-clean. Standalone builds can export OPENWIFI_GITHUB_OWNER to match.
+OPENWIFI_GITHUB_OWNER ?= open-sdr
+OPENWIFI_GITHUB_REPO := https://github.com/$(OPENWIFI_GITHUB_OWNER)/openwifi.git
 
 
 OPENWIFI_DIR:=$(PKG_BUILD_DIR)/$(PKG_NAME)
