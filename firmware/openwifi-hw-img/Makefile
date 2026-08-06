@@ -37,7 +37,7 @@ endef
 
 XSA_FOLDER:=$(PKG_BUILD_DIR)/boards/$(CONFIG_OPENWIFI_BOARD_NAME)/sdk
 define Build/Compile
-	cd $(XSA_FOLDER) && unzip ./system_top.xsa
+	cd $(XSA_FOLDER) && unzip -o ./system_top.xsa
 	$(if $(CONFIG_TARGET_zynqmp), \
 		cd $(XSA_FOLDER) && patch -N -p1 < $(PATCH_DIR)/000-Add-arguments-to-function-declarations-in-psu_init_g.patch \
 	)
