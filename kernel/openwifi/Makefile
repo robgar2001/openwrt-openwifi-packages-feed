@@ -8,6 +8,10 @@ PKG_LICENSE_FILES:=
 
 PKG_MAINTAINER:=Robbe Gaeremynck <robbe.gaeremynck@outlook.com>
 PKG_BUILD_PARALLEL:=1
+# Ensure adi_non-mainline_common is fully built and its headers staged
+# (ad9361_regs.h, clkscale.h, ...) before openwifi compiles. Without this,
+# a parallel build can compile the openwifi module before the headers exist.
+PKG_BUILD_DEPENDS:=adi_non-mainline_common
 
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
