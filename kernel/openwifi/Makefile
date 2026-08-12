@@ -16,7 +16,8 @@ PKG_BUILD_DEPENDS:=adi_non-mainline_common
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
-OPENWIFI_BRANCH ?= feature/cicd
+# Branch only needs to exist; the exact commit is pinned by OPENWIFI_REVISION.
+OPENWIFI_BRANCH ?= master
 OPENWIFI_REVISION ?= 8c5af493 # Latest known working commit (must be length eight)
 # Owner of the openwifi source. The openwifi CI overrides this (via env) to the
 # fork running the workflow; the default stays upstream so the committed feed is
